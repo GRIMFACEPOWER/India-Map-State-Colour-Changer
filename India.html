@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive India Map</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f4f4f4;
+        }
+        #map-container {
+            width: 600px;
+            height: auto;
+            position: relative;
+            z-index: 10;
+
+        }
+        #map-container svg {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+        .state {
+            fill: #ff5151; /* Default color for states */
+            stroke: #000; /* Border color */
+            stroke-width: 0.5;
+            cursor: pointer;
+            transition: fill 0.3s ease;
+        }
+        .state:hover {
+            fill: #f39c12; /* Hover color */
+        }
+        .region-path {
+            fill: #ec3e3e;
+            stroke: #333;
+            stroke-width: 1px;
+            transition: fill 0.3s;
+        }
+        .region-path:hover {
+            fill: #ffa07a;
+        }
+        .AndamanAndNicobar {
+            fill: #ff4500;
+        }
+        .selected {
+            fill: #cc972e; /* Green color for selected regions */
+            transition: fill 0.3s ease;
+        }
+        .state-original {
+            fill: #a8a8a8; /* Default color */
+        }
+
+        .state-red {
+            fill: rgb(171, 94, 94);
+        }
+
+        .state-blue {
+            fill: rgb(94, 133, 171);
+        }
+
+        .state-green {
+            fill: rgb(94, 171, 103);
+        }
+
+        .state-yellow {
+            fill: rgb(171, 152, 94);
+        }
+
+        .state-purple {
+            fill: rgb(133, 94, 171);
+        }
+
+
+
+    </style>
+</head>
+<body>
+    <div id="map-container">
+      </div>
+    <script>
+        // Load the SVG file dynamically
+        fetch('india.svg')
+            .then(response => response.text())
+            .then(svgContent => {
+                const container = document.getElementById('map-container');
+                container.innerHTML = svgContent;
+
+                // Select all <path>, <polygon>, and other graphical elements in the SVG
+                const regions = container.querySelectorAll('path, polygon, circle'); // Add other tags if necessary
+
+                // Initialize the state for each region
+                regions.forEach(region => {
+                    region.dataset.state = '0'; // Set the initial state to 0 (original)
+
+                    region.addEventListener('click', () => {
+                        let currentState = parseInt(region.dataset.state);
+                        currentState = (currentState + 1) % 6; // Cycle through 0 -> 1 -> 2 -> 0
+                        region.dataset.state = currentState;
+
+                        // Remove previous state classes
+                        region.classList.remove('state-red', 'state-blue', 'state-green', 'state-yellow', 'state-purple', 'state-original');
+
+                        // Add the corresponding class
+                        switch (currentState) {
+                            case 0:
+                                region.classList.add('state-original');
+                                break;
+                            case 1:
+                                region.classList.add('state-red');
+                                break;
+                            case 2:
+                                region.classList.add('state-blue');
+                                break;
+                            case 3:
+                                region.classList.add('state-green');
+                                break;
+                            case 4:
+                                region.classList.add('state-yellow');
+                            break;
+                            case 5:
+                                region.classList.add('state-purple');
+                            break;
+                        }
+                    });
+                });
+
+            })
+            .catch(error => console.error('Error loading SVG:', error));
+
+
+        // Function to add event listeners to regions
+        function addEventListeners() {
+            // Select all elements with class 'state' or 'region-path'
+            const regions = document.querySelectorAll('#map-container .state, #map-container .region-path');
+            console.log(`Regions found: ${regions.length}`); // Debugging
+
+            regions.forEach(region => {
+                region.addEventListener('click', (event) => {
+                    const regionId = event.target.id || 'unknown'; // Get the id of the clicked region
+                    console.log(`Region clicked: ${regionId}`);
+
+                    // Check if Andaman and Nicobar Islands was clicked
+                    if (regionId === 'INTG-circle') {
+                        console.log('Andaman and Nicobar Islands was clicked!');
+                    } else {
+                        console.log(`You clicked on a different region: ${regionId}`);
+                    }
+                });
+            });
+        }
+    </script>
+</body>
+</html>
