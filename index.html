@@ -22,7 +22,6 @@
 
         }
         #map-container svg {
-            max-width: 100%;
             height: auto;
             display: block;
             margin: 0 auto;
@@ -76,14 +75,59 @@
         .state-purple {
             fill: rgb(133, 94, 171);
         }
-
+        .boxes {
+            display: flex; /* Makes all child elements align in a row */
+            justify-content: center; /* Centers the boxes horizontally */
+            align-items: center; /* Centers the boxes vertically within their container */
+            margin-top: 800px; /* Adjust as per your layout */
+            gap: 10px;
+            text-align: center;
+            user-select: none;
+        }
+        .box-1 {
+            width: 20px;
+            height: 20px;
+            background-color: rgb(171, 94, 94);
+            margin-left:10px;
+        }
+        .box-2 {
+            width: 20px;
+            height: 20px;
+            background-color: rgb(94, 133, 171);
+            margin-left:10px;
+        }
+        .box-3 {
+            width: 20px;
+            height: 20px;
+            background-color: rgb(94, 171, 103);
+            margin-left:10px;
+        }
+        .box-4 {
+            width: 20px;
+            height: 20px;
+            background-color: rgb(171, 152, 94);
+            margin-left:10px;
+        }
+        .box-5 {
+            width: 20px;
+            height: 20px;
+            background-color: rgb(133, 94, 171);
+            margin-left:10px;
+        }
+        .box-6 {
+            width: 20px;
+            height: 20px;
+            background-color: #a8a8a8;
+            margin-left:10px;
+        }
 
 
     </style>
 </head>
 <body>
+    
     <div id="map-container">
-      </div>
+    </div>
     <script>
         // Load the SVG file dynamically
         fetch('india.svg')
@@ -157,4 +201,16 @@
         }
     </script>
 </body>
+<bodi>
+    <div class="colours">
+        <div class="boxes">
+            <div class="box-1">1</div>
+            <div class="box-2">2</div>
+            <div class="box-3">3</div>
+            <div class="box-4">4</div>
+            <div class="box-5">5</div>
+            <div class="box-6">6</div>
+        </div>
+    </div>
+</bodi>
 </html>
